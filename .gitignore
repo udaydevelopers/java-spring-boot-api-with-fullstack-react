@@ -1,0 +1,14 @@
+# Ignore node_modules in any folder
+**/node_modules/
+
+# Ignore frontend build output in any folder
+**/dist/
+**/build/
+**/coverage/
+
+# Ignore Maven build output in any folder
+**/target/
+
+# Ignore compiled Java files
+*.class
+*.jar

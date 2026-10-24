@@ -1,0 +1,2 @@
+Files.writeString(Path.of("data.txt"), "Java");
+Spring Boot

@@ -1,0 +1,7 @@
+mvnw.cmd spring-boot:run
+
+
+added spring-boot-starter-web to pom.xml.
+
+Swagger Link
+http://localhost:8080/swagger-ui/index.html

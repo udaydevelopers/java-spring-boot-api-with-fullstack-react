@@ -1,0 +1,198 @@
+
+
+/* Employee Management - Basic Styling */
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fb;
+  color: #222;
+}
+
+/* Main Application Container */
+
+.app-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+button {
+  padding: 10px 16px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #1d4ed8;
+}
+
+input {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+li {
+  margin: 12px 0;
+  padding: 12px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+
+/* Employee Form Styling */
+
+h1,
+h2 {
+  color: #1e3a8a;
+}
+
+input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Employee List Styling */
+
+ul {
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+  padding: 16px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+/* Employee Form Layout */
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+form input {
+  flex: 1;
+  min-width: 180px;
+}
+
+form button {
+  margin: 0;
+}
+/* Update and Delete Buttons */
+
+.update-btn {
+  background-color: #16a34a;
+}
+
+.update-btn:hover {
+  background-color: #15803d;
+}
+
+.delete-btn {
+  background-color: #dc2626;
+}
+
+.delete-btn:hover {
+  background-color: #b91c1c;
+}
+
+/* Responsive Design */
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  .app-container {
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    margin: 5px 0;
+  }
+
+  form button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  li {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Loading and Error Messages */
+
+.loading-message {
+  color: #fff;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.error-message {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 15px 0;
+}
+/* Application Heading */
+
+/* Typography and Spacing */
+
+.app-container {
+  line-height: 1.6;
+}
+
+.app-container h1,
+.app-container h2 {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+}
+
+.app-container p {
+  font-size: 15px;
+}
+
+.app-container input,
+.app-container button {
+  font-family: inherit;
+}

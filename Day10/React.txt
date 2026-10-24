@@ -1,0 +1,1 @@
+Prepare to connect React to Spring Boot
