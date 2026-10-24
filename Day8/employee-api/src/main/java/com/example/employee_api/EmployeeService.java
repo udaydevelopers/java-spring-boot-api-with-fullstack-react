@@ -38,7 +38,14 @@ public class EmployeeService {
         return repository.save(employee);
     }
 
+    
     public void deleteEmployee(Integer id) {
-        repository.deleteById(id);
+        Employee employee = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Employee not found with id: " + id));
+
+        repository.delete(employee);
     }
+
 }

@@ -7,6 +7,9 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -45,6 +48,14 @@ public class EmployeeController {
     }
 
     
+    
+    @Operation(summary = "Delete an employee by ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "204",
+                    description = "Employee deleted successfully"),
+        @ApiResponse(responseCode = "404",
+                    description = "Employee not found")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(
             @PathVariable Integer id) {
