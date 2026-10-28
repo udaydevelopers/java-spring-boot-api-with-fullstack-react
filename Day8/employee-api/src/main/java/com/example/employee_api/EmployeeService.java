@@ -8,9 +8,13 @@ import java.util.List;
 public class EmployeeService {
 
     private final EmployeeRepository repository;
+    private final DepartmentRepository departmentRepository;
 
-    public EmployeeService(EmployeeRepository repository) {
+    public EmployeeService(
+            EmployeeRepository repository,
+            DepartmentRepository departmentRepository) {
         this.repository = repository;
+        this.departmentRepository = departmentRepository;
     }
 
     public List<Employee> getAllEmployees() {
@@ -22,6 +26,17 @@ public class EmployeeService {
         employee.setName(request.getName());
         employee.setSalary(request.getSalary());
 
+        if (request.getDepartmentId() != null) {
+            Department department = departmentRepository
+                    .findById(request.getDepartmentId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(
+                                    "Department not found with id: "
+                                            + request.getDepartmentId()));
+
+            employee.setDepartment(department);
+        }
+
         return repository.save(employee);
     }
 
@@ -30,15 +45,26 @@ public class EmployeeService {
 
         Employee employee = repository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Employee not found with id: " + id));
+                        new ResourceNotFoundException(
+                                "Employee not found with id: " + id));
 
         employee.setName(request.getName());
         employee.setSalary(request.getSalary());
 
+        if (request.getDepartmentId() != null) {
+            Department department = departmentRepository
+                    .findById(request.getDepartmentId())
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException(
+                                    "Department not found with id: "
+                                            + request.getDepartmentId()));
+
+            employee.setDepartment(department);
+        }
+
         return repository.save(employee);
     }
 
-    
     public void deleteEmployee(Integer id) {
         Employee employee = repository.findById(id)
                 .orElseThrow(() ->
@@ -47,5 +73,4 @@ public class EmployeeService {
 
         repository.delete(employee);
     }
-
 }

@@ -8,6 +8,7 @@ public class EmployeeRequest {
 
     @NotBlank(message = "Name is required")
     private String name;
+    private Integer departmentId;
 
     @Positive(message = "Salary must be greater than zero")
     private double salary;
@@ -29,5 +30,13 @@ public class EmployeeRequest {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public Integer getDepartmentId() {
+    return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }
