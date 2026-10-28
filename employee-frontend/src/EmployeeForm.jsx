@@ -6,6 +6,9 @@ function EmployeeForm({
   setName,
   salary,
   setSalary,
+  departments,
+  departmentId,
+  setDepartmentId,
   selectedEmployee,
   onCreate,
   onUpdate,
@@ -47,6 +50,20 @@ function EmployeeForm({
           min="0.01"
           step="any"
         />
+
+        <select
+          value={departmentId}
+          onChange={(event) => setDepartmentId(event.target.value)}
+          required
+        >
+          <option value="">Select Department</option>
+
+         {(departments ?? []).map((department) => (
+            <option key={department.id} value={department.id}>
+              {department.name}
+            </option>
+          ))}
+        </select>
 
         <button
           type="submit"

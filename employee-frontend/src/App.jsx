@@ -1,11 +1,13 @@
 
-import { useState, useRef, useEffect  } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import EmployeeForm from './EmployeeForm'
 import EmployeeList from './EmployeeList'
 
 function App() {
   const [employees, setEmployees] = useState([])
+  const [departments, setDepartments] = useState([])
+  const [departmentId, setDepartmentId] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [name, setName] = useState('')
@@ -13,46 +15,68 @@ function App() {
   const [selectedEmployee, setSelectedEmployee] = useState(null)
   const loadingRef = useRef(false)
 
+  // Load employees and departments when the component mounts
+  useEffect(() => {
+    loadEmployees()
+    loadDepartments()
+  }, [])
+
   // Load all employees
-useEffect(() => {
-  loadEmployees()
-}, [])
-
-const loadEmployees = async () => {
-  // Prevent another request if one is already running
-  if (loadingRef.current) {
-    return
-  }
-
-  // Lock immediately, before React re-renders
-  loadingRef.current = true
-  setLoading(true)
-  setError('')
-
-  try {
-    const response = await fetch(
-      'http://localhost:8080/api/employees'
-    )
-
-    if (!response.ok) {
-      throw new Error('Failed to load employees')
+  const loadEmployees = async () => {
+    if (loadingRef.current) {
+      return
     }
 
-    const data = await response.json()
-    setEmployees(data)
-  } catch (err) {
-    setError(err.message)
-  } finally {
-    // Always release the lock
-    loadingRef.current = false
-    setLoading(false)
+    loadingRef.current = true
+    setLoading(true)
+    setError('')
+
+    try {
+      const response = await fetch(
+        'http://localhost:8080/api/employees'
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to load employees')
+      }
+
+      const data = await response.json()
+      setEmployees(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      loadingRef.current = false
+      setLoading(false)
+    }
   }
-}
+
+  // Load all departments
+  const loadDepartments = async () => {
+    try {
+      const response = await fetch(
+        'http://localhost:8080/api/departments'
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to load departments')
+      }
+
+      const data = await response.json()
+      setDepartments(data)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
 
   // Create employee
   const createEmployee = async () => {
     if (!name.trim() || !salary || Number(salary) <= 0) {
       alert('Please enter a valid name and salary.')
+      return
+    }
+
+    if (!departmentId) {
+      alert('Please select a department.')
       return
     }
 
@@ -66,7 +90,8 @@ const loadEmployees = async () => {
           },
           body: JSON.stringify({
             name: name.trim(),
-            salary: Number(salary)
+            salary: Number(salary),
+            departmentId: Number(departmentId)
           })
         }
       )
@@ -79,6 +104,7 @@ const loadEmployees = async () => {
 
       setName('')
       setSalary('')
+      setDepartmentId('')
       setSelectedEmployee(null)
       setError('')
 
@@ -99,6 +125,11 @@ const loadEmployees = async () => {
       return
     }
 
+    if (!departmentId) {
+      alert('Please select a department.')
+      return
+    }
+
     try {
       const response = await fetch(
         `http://localhost:8080/api/employees/${selectedEmployee.id}`,
@@ -109,7 +140,8 @@ const loadEmployees = async () => {
           },
           body: JSON.stringify({
             name: name.trim(),
-            salary: Number(salary)
+            salary: Number(salary),
+            departmentId: Number(departmentId)
           })
         }
       )
@@ -123,6 +155,7 @@ const loadEmployees = async () => {
       setSelectedEmployee(null)
       setName('')
       setSalary('')
+      setDepartmentId('')
       setError('')
 
       alert('Employee updated successfully!')
@@ -167,6 +200,11 @@ const loadEmployees = async () => {
     setSelectedEmployee(employee)
     setName(employee.name)
     setSalary(String(employee.salary))
+    setDepartmentId(
+      employee.department
+        ? String(employee.department.id)
+        : ''
+    )
     setError('')
   }
 
@@ -175,6 +213,7 @@ const loadEmployees = async () => {
     setSelectedEmployee(null)
     setName('')
     setSalary('')
+    setDepartmentId('')
     setError('')
   }
 
@@ -215,6 +254,9 @@ const loadEmployees = async () => {
         setName={setName}
         salary={salary}
         setSalary={setSalary}
+        departments={departments}
+        departmentId={departmentId}
+        setDepartmentId={setDepartmentId}
         selectedEmployee={selectedEmployee}
         onCreate={createEmployee}
         onUpdate={updateEmployee}
